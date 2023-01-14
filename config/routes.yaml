@@ -1,0 +1,8 @@
+Health:
+    prefix: /api/health
+    resource: ../src/Health/Infrastructure/Api/routes.yaml
+    trailing_slash_on_root: false
+
+kernel:
+    resource: ../src/Kernel.php
+    type: annotation

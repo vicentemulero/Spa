@@ -1,0 +1,57 @@
+version: "3.4"
+
+services:
+  skeleton-php-symfony-fpm:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - skeleton-php-symfony-postgres
+    environment:
+      APP_ENV: dev
+    volumes:
+      - php_socket:/var/run/php
+      - ./:/srv/app:rw
+      - ./docker/php/conf.d/symfony.dev.ini:/usr/local/etc/php/conf.d/symfony.ini
+    networks:
+      skeleton-php-symfony-net:
+  
+  caddy:
+    image: caddy:2-alpine
+    depends_on:
+      - skeleton-php-symfony-fpm
+    environment:
+      HTTP_PORT: 8080
+    restart: unless-stopped
+    volumes:
+      - php_socket:/var/run/php
+      - ./docker/caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - ./public:/srv/app/public:ro
+    ports:
+      - "8080:8080"
+    networks:
+      skeleton-php-symfony-net:
+  
+  skeleton-php-symfony-postgres:
+    container_name: skeleton-php-symfony-postgres
+    image: postgres:14-alpine
+    env_file:
+      - .env
+    volumes:
+      - skeleton-php-symfony-postgres-volume:/var/lib/postgresql/data:rw
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      skeleton-php-symfony-net:
+        
+volumes:
+  php_socket:
+  skeleton-php-symfony-postgres-volume:
+
+networks:
+  skeleton-php-symfony-net:
+    driver: bridge

@@ -1,0 +1,12 @@
+
+{
+    http_port {$HTTP_PORT}
+    auto_https off
+}
+
+:{$HTTP_PORT} {
+    root * /srv/app/public
+    php_fastcgi unix//var/run/php/php-fpm.sock
+    encode zstd gzip
+    file_server
+}

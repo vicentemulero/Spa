@@ -1,0 +1,18 @@
+doctrine:
+    dbal:
+        types:
+            #uuid: App\Shared\Infrastructure\Persistence\Doctrine\Type\UuidType
+        url: '%env(resolve:DATABASE_URL)%'
+    orm:
+        auto_generate_proxy_classes: true
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        #mappings:
+        #    App:
+        #        is_bundle: false
+        #        type: xml
+        #        dir: '%kernel.project_dir%/src/Entity/Infrastructure/Persistence/Doctrine'
+        #        prefix: 'App\Entity\Domain'
+        #        alias: App
+    
+    

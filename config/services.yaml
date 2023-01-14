@@ -1,0 +1,68 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+        bind:
+            App\Health\Domain\Repository\HealthRepositoryInterface: '@App\Health\Infrastructure\Repository\HealthRepository'
+
+    _instanceof:
+        App\Shared\Domain\Bus\Command\CommandHandlerInterface:
+            tags: ['internal.command_handler']
+
+        App\Shared\Domain\Bus\Query\QueryHandlerInterface:
+            tags: ['internal.query_handler']
+        
+        App\Shared\Domain\Bus\Event\DomainEventSubscriberInterface:
+            tags: ['internal.domain_event_subscriber']
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/*/Domain/*'
+            - '../src/Kernel.php'
+            
+            
+    Doctrine\Migrations\Tools\Console\Command\:
+        resource: '../vendor/doctrine/migrations/lib/Doctrine/Migrations/Tools/Console/Command'
+        tags: [ 'console.command' ] 
+
+    ### Buses
+    App\Shared\Domain\Bus\Command\CommandBus:
+        class: App\Shared\Infrastructure\Bus\Command\SymfonyMessengerCommandBus
+        arguments: [!tagged internal.command_handler]
+
+
+    App\Shared\Domain\Bus\Query\QueryBus:
+        class: App\Shared\Infrastructure\Bus\Query\InMemoryQueryBus
+        arguments: [ !tagged internal.query_handler ]
+        
+    App\Shared\Domain\Bus\Event\EventBus:
+        class: App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus
+        arguments: [!tagged internal.domain_event_subscriber]	 
+        lazy: true
+        
+    App\Shared\Infrastructure\Bus\Event\DomainEventMapping:
+       arguments: [ !tagged internal.domain_event_subscriber ]
+       
+    App\Shared\Infrastructure\Bus\Event\DomainEventSubscriberLocator:
+       arguments: [ !tagged internal.domain_event_subscriber ]	
+
+    ### Shared
+    App\Shared\Infrastructure\Symfony\JsonBodyToRequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+            
+    App\Shared\Infrastructure\Symfony\ApiExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onException }
+                

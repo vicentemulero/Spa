@@ -4,8 +4,8 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <embeddable name="App\SpaServices\Domain\Model\ValueObjects\ServicePrice">
-        <field name="price" type="float" column="price"/>
+    <embeddable name="App\SpaServices\Domain\Model\ServicePrice">
+        <field name="value" type="float" column="price"/>
     </embeddable>
 
 </doctrine-mapping>

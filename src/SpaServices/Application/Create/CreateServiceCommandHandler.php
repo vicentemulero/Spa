@@ -6,9 +6,9 @@ namespace App\SpaServices\Application\Create;
 
 
 use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceId;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceName;
-use App\SpaServices\Domain\Model\ValueObjects\ServicePrice;
+use App\SpaServices\Domain\Model\ServiceId;
+use App\SpaServices\Domain\Model\ServiceName;
+use App\SpaServices\Domain\Model\ServicePrice;
 
 final class CreateServiceCommandHandler implements CommandHandlerInterface
 {

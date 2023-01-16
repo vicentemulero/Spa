@@ -7,9 +7,9 @@ namespace App\SpaServices\Application\Create;
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\SpaServices\Domain\Exceptions\ServiceAlreadyExistsException;
 use App\SpaServices\Domain\Model\Service;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceId;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceName;
-use App\SpaServices\Domain\Model\ValueObjects\ServicePrice;
+use App\SpaServices\Domain\Model\ServiceId;
+use App\SpaServices\Domain\Model\ServiceName;
+use App\SpaServices\Domain\Model\ServicePrice;
 use App\SpaServices\Domain\Repository\ServiceRepositoryInterface;
 
 final class ServiceCreator

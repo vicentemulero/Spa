@@ -9,13 +9,13 @@
             <generator strategy="NONE"/>
         </id>
 
-        <embedded name="name" class="App\SpaServices\Domain\Model\ValueObjects\ServiceName"  use-column-prefix="false" />
-        <embedded name="price" class="App\SpaServices\Domain\Model\ValueObjects\ServicePrice" use-column-prefix="false" />
+        <embedded name="name" class="App\SpaServices\Domain\Model\ServiceName"  use-column-prefix="false" />
+        <embedded name="price" class="App\SpaServices\Domain\Model\ServicePrice" use-column-prefix="false" />
         <field name="createdAt" type="datetime" column="created_at"/>
 
         <one-to-many
             field="serviceSchedules"
-            target-entity="App\SpaServices\Domain\ServiceSchedule"
+            target-entity="App\SpaServices\Domain\Model\ServiceSchedule"
             mapped-by="service"
             index-by="id">
             <cascade>

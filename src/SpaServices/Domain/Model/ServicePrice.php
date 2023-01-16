@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SpaServices\Domain\Model\ValueObjects;
+namespace App\SpaServices\Domain\Model;
 
 use App\Shared\Domain\ValueObject\FloatValueObject;
 

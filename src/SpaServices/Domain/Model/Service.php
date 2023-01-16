@@ -6,14 +6,11 @@ namespace App\SpaServices\Domain\Model;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\SpaServices\Domain\Events\ServiceCreatedEvent;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceId;
-use App\SpaServices\Domain\Model\ValueObjects\ServiceName;
-use App\SpaServices\Domain\Model\ValueObjects\ServicePrice;
 use DateInterval;
 use DatePeriod;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use DateTime;
 
 
 final class Service extends AggregateRoot

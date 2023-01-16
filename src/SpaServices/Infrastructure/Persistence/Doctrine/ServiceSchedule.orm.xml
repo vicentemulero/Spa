@@ -2,7 +2,7 @@
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-    <entity name="App\SpaServices\Domain\ServiceSchedule" table="service_schedule">
+    <entity name="App\SpaServices\Domain\Model\ServiceSchedule" table="service_schedule">
         <id name="id" type="integer" column="id">
             <generator strategy="IDENTITY"/>
         </id>
@@ -14,11 +14,11 @@
         <field name="availableTo" column="available_to" />
         <field name="availableFrom" column="available_from"/>
         <field name="timeAvailable" column="time_available"/>
-        <field name="isAvailable" column="is_available" type="bool"/>
+        <field name="isAvailable" column="is_available" type="boolean"/>
         <field name="createdAt" column="created_at" type="datetime"/>
         <field name="updatedAt" column="updated_at" type="datetime" nullable="true"/>
 
-        <many-to-one field="service" target-entity="App\SpaServices\Domain\Service" inversed-by="serviceSchedules">
+        <many-to-one field="service" target-entity="App\SpaServices\Domain\Model\Service" inversed-by="serviceSchedules">
             <join-column name="service_id" referenced-column-name="id"/>
         </many-to-one>
 

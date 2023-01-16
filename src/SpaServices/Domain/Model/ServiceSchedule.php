@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\SpaServices\Domain\Model;
 
-use App\SpaServices\Domain\Model\ValueObjects\ServiceId;
 use DateTime;
 
 final class ServiceSchedule

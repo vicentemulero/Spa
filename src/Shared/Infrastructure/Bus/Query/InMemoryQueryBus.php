@@ -4,14 +4,12 @@ namespace App\Shared\Infrastructure\Bus\Query;
 
 use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\QueryInterface;
-use App\Shared\Domain\Bus\Query\QueryNotRegisteredException;
 use App\Shared\Domain\Bus\Query\QueryResponse;
 use App\Shared\Infrastructure\Bus\HandlerBuilder;
-use Symfony\Component\Messenger\Exception\HandlerFailedException;
+use InvalidArgumentException;
 use Symfony\Component\Messenger\Exception\NoHandlerForMessageException;
 use Symfony\Component\Messenger\Handler\HandlersLocator;
 use Symfony\Component\Messenger\MessageBus;
-use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Middleware\HandleMessageMiddleware;
 use Symfony\Component\Messenger\Stamp\HandledStamp;
 
@@ -28,20 +26,15 @@ final class InMemoryQueryBus implements QueryBus
         ]);
     }
 
-    public function dispatch(QueryInterface $query): QueryResponse
+    public function ask(QueryInterface $query): QueryResponse|null
     {
         try {
-            $messengerEnvelope = $this->bus->dispatch($query);
+            /** @var HandledStamp $stamp */
+            $stamp = $this->bus->dispatch($query)->last(HandledStamp::class);
 
-            return $messengerEnvelope->last(HandledStamp::class)->getResult();
-        } catch (NoHandlerForMessageException $noHandlerForMessageException) {
-            throw new QueryNotRegisteredException($query);
-        } catch (HandlerFailedException $handlerFailedException) {
-            foreach ($handlerFailedException->getNestedExceptions() as $nestedException) {
-                throw $nestedException;
-            }
-
-            throw $handlerFailedException;
+            return $stamp->getResult();
+        } catch (NoHandlerForMessageException $e) {
+            throw new InvalidArgumentException(sprintf('The query has not a valid handler: %s', $query::class));
         }
     }
 }

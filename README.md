@@ -31,6 +31,7 @@ Check the [Getting Started](#getting-started) for full details.
 * [fakerphp/faker](https://fakerphp.github.io/)
 * [mockery/mockery](https://github.com/mockery/mockery)
 * [symfony/profiler-pack](https://symfony.com/doc/current/profiler.html)
+* [symfony/validator](https://symfony.com/doc/current/validation.html)
 * [twig/twig](https://twig.symfony.com/doc/2.x/installation.html)
 
 ## Getting Started

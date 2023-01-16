@@ -11,11 +11,12 @@ final class DatabaseNotHealthyRepositoryException extends DomainError
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
-    public function errorCode(): string
+    public function errorCode(): int
     {
-        return '8001';
+        return 8001; // Internal code to identify Health Error connection database repository
     }
 
     public function errorMessage(): string

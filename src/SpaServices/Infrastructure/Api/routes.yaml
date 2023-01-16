@@ -1,0 +1,5 @@
+create_service:
+    path: /create
+    controller: App\SpaServices\Infrastructure\Api\ServiceCreateController
+    methods: [Post]
+

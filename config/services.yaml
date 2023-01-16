@@ -12,6 +12,7 @@ services:
 
         bind:
             App\Health\Domain\Repository\HealthRepositoryInterface: '@App\Health\Infrastructure\Repository\HealthRepository'
+            App\SpaServices\Domain\Repository\ServiceRepositoryInterface: '@App\SpaServices\Infrastructure\Persistence\Repository\ServiceRepository'
 
     _instanceof:
         App\Shared\Domain\Bus\Command\CommandHandlerInterface:
@@ -47,7 +48,7 @@ services:
         arguments: [ !tagged internal.query_handler ]
         
     App\Shared\Domain\Bus\Event\EventBus:
-        class: App\Shared\Infrastructure\Bus\Event\InMemorySymfonyEventBus
+        class: App\Shared\Infrastructure\Bus\Event\InMemory\InMemorySymfonyEventBus
         arguments: [!tagged internal.domain_event_subscriber]	 
         lazy: true
         

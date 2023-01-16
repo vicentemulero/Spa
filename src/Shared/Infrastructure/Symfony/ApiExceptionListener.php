@@ -2,9 +2,9 @@
 
 namespace App\Shared\Infrastructure\Symfony;
 
-use App\Shared\ClassUtils;
-use App\Shared\DomainError;
-use App\Shared\StringUtils;
+use App\Shared\Domain\ClassUtils;
+use App\Shared\Domain\DomainError;
+use App\Shared\Domain\StringUtils;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;

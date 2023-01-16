@@ -34,7 +34,7 @@ final class ServiceCreateController extends ApiController
                 $price
             )
         );
-        return $this->successResponse(Response::HTTP_CREATED);
+        return $this->successResponse(Response::HTTP_CREATED, sprintf("Service '%s' with ID '%s' created",$name, $id->value()));
     }
 
     private function validateRequest(Request $request): ?array

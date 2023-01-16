@@ -11,9 +11,9 @@
         <field name="reservationId" column="reservation_id" nullable="true"/>
         <field name="reservationDate" column="reservation_date" type="datetime" nullable="true"/>
         <field name="dayAvailable" column="day_available" />
-        <field name="availableTo" column="available_to" />
-        <field name="availableFrom" column="available_from"/>
-        <field name="timeAvailable" column="time_available"/>
+        <field name="availableTo" column="available_to" type="time"/>
+        <field name="availableFrom" column="available_from" type="time"/>
+        <field name="timeAvailable" column="time_available" type="time"/>
         <field name="isAvailable" column="is_available" type="boolean"/>
         <field name="createdAt" column="created_at" type="datetime"/>
         <field name="updatedAt" column="updated_at" type="datetime" nullable="true"/>

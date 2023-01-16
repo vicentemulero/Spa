@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SpaServices\Application\Create;
+namespace App\SpaServices\Application\CreateService;
 
 use App\Shared\Domain\Bus\Event\EventBus;
 use App\SpaServices\Domain\Exceptions\ServiceAlreadyExistsException;

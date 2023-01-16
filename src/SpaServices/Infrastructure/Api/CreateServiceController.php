@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\SpaServices\Infrastructure\Api;
 
 use App\Shared\Domain\ValueObject\Uuid;
-use App\SpaServices\Application\Create\CreateServiceCommand;
+use App\SpaServices\Application\CreateService\CreateServiceCommand;
 use App\SpaServices\Domain\Exceptions\ServiceAlreadyExistsException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\Type;
 
-final class ServiceCreateController extends ApiController
+final class CreateServiceController extends ApiController
 {
     public function __invoke(Request $request): Response
     {

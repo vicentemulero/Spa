@@ -4,7 +4,7 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="App\SpaServices\Domain\Model\Service" table="services">
+    <entity name="App\SpaServices\Domain\Model\Service" table="service">
         <id name="id" type="service_id" column="id">
             <generator strategy="NONE"/>
         </id>

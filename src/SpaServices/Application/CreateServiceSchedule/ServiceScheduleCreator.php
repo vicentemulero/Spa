@@ -33,7 +33,7 @@ final class ServiceScheduleCreator
             throw new ServiceNotExistsException($id->value());
         }
 
-        $service->addServiceSchedules($dayAvailable,$availableTo,$availableFrom);
+        $service->addServiceSchedules($dayAvailable,$availableFrom,$availableTo);
 
         $this->repository->store($service);
         $this->bus->publish(...$service->pullDomainEvents());

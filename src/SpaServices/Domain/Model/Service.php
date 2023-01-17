@@ -6,8 +6,6 @@ namespace App\SpaServices\Domain\Model;
 
 use App\Shared\Domain\Aggregate\AggregateRoot;
 use App\SpaServices\Domain\Events\ServiceCreatedEvent;
-use DateInterval;
-use DatePeriod;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -48,13 +46,14 @@ final class Service extends AggregateRoot
         return $service;
     }
 
-    public function addServiceSchedules(DateTime $dayAvailable, DateTime $availableTo, DateTime $availableFrom): void
+    public function addServiceSchedules(DateTime $dayAvailable, DateTime $availableFrom, DateTime $availableTo): void
     {
-        $interval = new DateInterval('PT1H');
-        $timesAvailable = new DatePeriod($availableTo, $interval, $availableFrom);
-        foreach ($timesAvailable as $time) {
-            $this->serviceSchedules->add(new ServiceSchedule($this, $dayAvailable->format('d:m:Y'), $availableTo->format('H:i:s'),
-                $availableFrom->format('H:i:s'), $time->format('H:i:s')));
+
+        $current = clone $availableFrom;
+        while ($current < $availableTo) {
+            $this->serviceSchedules->add(new ServiceSchedule($this, $dayAvailable->format('d/m/Y'), $availableFrom->format('H:i'),
+                $availableTo->format('H:i'), $current->format('H:i')));
+            $current->modify('+1 hour');
         }
     }
 

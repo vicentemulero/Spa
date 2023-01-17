@@ -25,16 +25,16 @@ final class ServiceSchedule
     public function __construct(
         Service        $service,
         string         $dayAvailable,
-        string         $availableTo,
         string         $availableFrom,
+        string         $availableTo,
         string         $timeAvailable
     )
     {
         $this->service = $service;
         $this->serviceId = $service->id();
         $this->dayAvailable = $dayAvailable;
-        $this->availableTo= $availableTo;
         $this->availableFrom = $availableFrom;
+        $this->availableTo= $availableTo;
         $this->timeAvailable = $timeAvailable;
         $this->reservationId = null;
         $this->reservationDate = null;

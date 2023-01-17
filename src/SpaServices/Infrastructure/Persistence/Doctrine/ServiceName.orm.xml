@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\SpaServices\Domain\Model\ServiceName">
-        <field name="value" column="name"/>
+        <field name="value" type="string" column="name"/>
     </embeddable>
 
 </doctrine-mapping>

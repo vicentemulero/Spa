@@ -14,9 +14,9 @@ final class DatabaseNotHealthyRepositoryException extends DomainError
         parent::__construct();
     }
 
-    public function errorCode(): int
+    public function errorCode(): string
     {
-        return 8001; // Internal code to identify Health Error connection database repository
+        return 'health_error_connection'; // Internal code to identify Health Error connection database repository
     }
 
     public function errorMessage(): string

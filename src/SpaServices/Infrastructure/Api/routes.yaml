@@ -3,3 +3,7 @@ create_service:
     controller: App\SpaServices\Infrastructure\Api\CreateServiceController
     methods: [Post]
 
+create_schedule_service:
+    path: /{id}/schedule/create
+    controller: App\SpaServices\Infrastructure\Api\CreateScheduleServiceController
+    methods: [Post]

@@ -48,7 +48,7 @@ final class Service extends AggregateRoot
         return $service;
     }
 
-    private function addServiceSchedules(DateTime $dayAvailable, DateTime $availableTo, DateTime $availableFrom): void
+    public function addServiceSchedules(DateTime $dayAvailable, DateTime $availableTo, DateTime $availableFrom): void
     {
         $interval = new DateInterval('PT1H');
         $timesAvailable = new DatePeriod($availableTo, $interval, $availableFrom);

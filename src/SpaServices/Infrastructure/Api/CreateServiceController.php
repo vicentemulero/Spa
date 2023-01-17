@@ -41,7 +41,7 @@ final class CreateServiceController extends ApiController
     {
         $constraint = new Collection(
             [
-                'name'    => [new NotBlank()],
+                'name'    => [new NotBlank(), new Type(["string"])],
                 'price'     => [new NotBlank(), new Positive(), new Type(["float"])]
             ]
         );

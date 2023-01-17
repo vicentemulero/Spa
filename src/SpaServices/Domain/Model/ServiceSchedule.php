@@ -22,7 +22,6 @@ final class ServiceSchedule
     private DateTime $createdAt;
     private ?Datetime $updatedAt;
 
-
     public function __construct(
         Service        $service,
         string         $dayAvailable,

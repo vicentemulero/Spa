@@ -7,7 +7,7 @@ namespace App\SpaServices\Domain\Exceptions;
 use App\Shared\Domain\DomainError;
 use Symfony\Component\HttpFoundation\Response;
 
-final class ServiceAlreadyExistsException extends DomainError
+final class ServiceNotExistsException extends DomainError
 {
     public function __construct(private readonly string $value)
     {
@@ -16,16 +16,16 @@ final class ServiceAlreadyExistsException extends DomainError
 
     public function errorCode(): string
     {
-        return "service_already_exist"; // Internal code to identify the service already exist exception
+        return "service_not_exist";
     }
 
     public function errorMessage(): string
     {
-        return sprintf('The service with id <%s> already exists', $this->value);
-    }
-    public function errorStatusCode(): int
-    {
-        return Response::HTTP_CONFLICT;
+        return sprintf('The Service with id <%s> does not exist', $this->value);
     }
 
+    public function errorStatusCode(): int
+    {
+        return Response::HTTP_NOT_FOUND;
+    }
 }

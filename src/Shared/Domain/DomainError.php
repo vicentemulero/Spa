@@ -11,7 +11,7 @@ abstract class DomainError extends DomainException
         parent::__construct($this->errorMessage());
     }
 
-    abstract public function errorCode(): int;
+    abstract public function errorCode(): string;
 
     abstract protected function errorMessage(): string;
 }

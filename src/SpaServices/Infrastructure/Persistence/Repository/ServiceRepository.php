@@ -19,4 +19,8 @@ class ServiceRepository extends DoctrineRepository implements ServiceRepositoryI
     {
         return $this->repository(Service::class)->find($id);
     }
+    public function findAllServices(): ?array
+    {
+        return $this->repository(Service::class)->findAll();
+    }
 }

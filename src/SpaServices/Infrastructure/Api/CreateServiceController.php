@@ -24,8 +24,8 @@ final class CreateServiceController extends ApiController
         if (!is_null($validationErrors)) return $this->errorResponse(Response::HTTP_BAD_REQUEST, 9001, $validationErrors);;
 
         $id = Uuid::random();
-        $name  = (string) $request->request->get('name');
-        $price  = (float) $request->request->get('price');
+        $name = (string)$request->request->get('name');
+        $price = (float)$request->request->get('price');
 
         $this->dispatch(
             new CreateServiceCommand(
@@ -34,15 +34,15 @@ final class CreateServiceController extends ApiController
                 $price
             )
         );
-        return $this->successResponse(Response::HTTP_CREATED, sprintf("Service '%s' with ID '%s' created",$name, $id->value()));
+        return $this->successResponse(Response::HTTP_CREATED, sprintf("Service '%s' with ID '%s' created", $name, $id->value()));
     }
 
     private function validateRequest(Request $request): ?array
     {
         $constraint = new Collection(
             [
-                'name'    => [new NotBlank(), new Type(["string"])],
-                'price'     => [new NotBlank(), new Positive(), new Type(["float"])]
+                'name' => [new NotBlank(), new Type(["string"])],
+                'price' => [new NotBlank(), new Positive(), new Type(["float"])]
             ]
         );
 
@@ -50,6 +50,7 @@ final class CreateServiceController extends ApiController
 
         return $this->requestValidation($input, $constraint);
     }
+
     protected function exceptions(): array
     {
         return [

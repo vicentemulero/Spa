@@ -13,4 +13,5 @@ interface ServiceRepositoryInterface
 
     public function findById(ServiceId $id): ?Service;
 
+    public function findAllServices(): ?array;
 }

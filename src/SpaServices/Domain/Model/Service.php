@@ -57,14 +57,32 @@ final class Service extends AggregateRoot
         }
     }
 
-    public function serviceSchedules(): Collection
-    {
-        return $this->serviceSchedules;
-    }
 
     public function id(): ServiceId
     {
         return $this->id;
+    }
+
+    public function serviceSchedulesAvailable(string $day): ?Collection
+    {
+        return $this->serviceSchedules->filter(function ($schedule) use ($day) {
+            return $schedule->dayAvailable() == $day && $schedule->isAvailable() == true;
+        });
+    }
+
+    public function name(): ServiceName
+    {
+        return $this->name;
+    }
+
+    public function price(): ServicePrice
+    {
+        return $this->price;
+    }
+
+    public function createdAt(): DateTime
+    {
+        return $this->createdAt;
     }
 
 }

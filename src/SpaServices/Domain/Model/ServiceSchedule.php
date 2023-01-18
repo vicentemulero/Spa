@@ -47,4 +47,20 @@ final class ServiceSchedule
     {
         return $this->id;
     }
+
+    public function isAvailable(): bool
+    {
+        return $this->isAvailable;
+    }
+
+
+    public function dayAvailable(): string
+    {
+        return $this->dayAvailable;
+    }
+
+    public function timeAvailable(): string
+    {
+        return $this->timeAvailable;
+    }
 }

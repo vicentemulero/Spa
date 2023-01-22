@@ -20,6 +20,7 @@ final class Version20230120210902 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
+
         $this->addSql('CREATE TABLE reservation (id VARCHAR(255) NOT NULL, schedule_id INT DEFAULT NULL, service_id VARCHAR(255) DEFAULT NULL, reserved_day VARCHAR(255) NOT NULL, reserved_time VARCHAR(255) NOT NULL, client_name VARCHAR(255) NOT NULL, client_email VARCHAR(255) NOT NULL, service_name VARCHAR(255) NOT NULL, service_price DOUBLE PRECISION NOT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_42C84955A40BC2D5 ON reservation (schedule_id)');
         $this->addSql('CREATE INDEX IDX_42C84955ED5CA9E6 ON reservation (service_id)');

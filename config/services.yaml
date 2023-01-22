@@ -13,6 +13,8 @@ services:
         bind:
             App\Health\Domain\Repository\HealthRepositoryInterface: '@App\Health\Infrastructure\Repository\HealthRepository'
             App\SpaServices\Domain\Repository\ServiceRepositoryInterface: '@App\SpaServices\Infrastructure\Persistence\Repository\ServiceRepository'
+            App\Reservations\Domain\Repository\ReservationRepositoryInterface: '@App\Reservations\Infrastructure\Persistence\Repository\ReservationRepository'
+            
 
     _instanceof:
         App\Shared\Domain\Bus\Command\CommandHandlerInterface:

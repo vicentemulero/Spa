@@ -10,10 +10,7 @@ use App\SpaServices\Domain\Exceptions\ServiceAlreadyExistsException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Shared\Infrastructure\Symfony\ApiController;
-use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Positive;
-use Symfony\Component\Validator\Constraints\Type;
+use Symfony\Component\Validator\Constraints as Assert;
 
 final class CreateServiceController extends ApiController
 {
@@ -39,10 +36,10 @@ final class CreateServiceController extends ApiController
 
     private function validateRequest(Request $request): ?array
     {
-        $constraint = new Collection(
+        $constraint = new Assert\Collection(
             [
-                'name' => [new NotBlank(), new Type(["string"])],
-                'price' => [new NotBlank(), new Positive(), new Type(["float"])]
+                'name' => [new Assert\NotBlank(), new Assert\Type(["string"])],
+                'price' => [new Assert\NotBlank(), new Assert\Positive(), new Assert\Type(["float"])]
             ]
         );
 

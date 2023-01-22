@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\SpaServices\Domain\Model;
+namespace App\Shared\Domain\SpaValueObject;
 
 
 use App\Shared\Domain\ValueObject\Uuid;

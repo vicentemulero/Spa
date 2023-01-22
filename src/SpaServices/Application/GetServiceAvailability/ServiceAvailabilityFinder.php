@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\SpaServices\Application\GetServiceAvailability;
 
+use App\Shared\Domain\SpaValueObject\ServiceId;
 use App\SpaServices\Domain\Exceptions\ServiceNotExistsException;
 use App\SpaServices\Domain\Model\Service;
-use App\SpaServices\Domain\Model\ServiceId;
 use App\SpaServices\Domain\Model\ServiceSchedule;
 use App\SpaServices\Domain\Repository\ServiceRepositoryInterface;
 
@@ -38,7 +38,7 @@ final class ServiceAvailabilityFinder
 
         /** @var ServiceSchedule $availability */
         foreach ($availabilities as $availability) {
-            $timeAvailable[] = ["Available at -> " => $availability->timeAvailable()];
+            $timeAvailable[] = ["Available at -> " => $availability->availableTime()];
         }
 
         return $timeAvailable;

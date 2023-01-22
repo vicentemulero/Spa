@@ -6,7 +6,7 @@ namespace App\SpaServices\Application\GetServiceAvailability;
 
 
 use App\Shared\Domain\Bus\Query\QueryHandlerInterface;
-use App\SpaServices\Domain\Model\ServiceId;
+use App\Shared\Domain\SpaValueObject\ServiceId;
 
 final class FindServiceAvailabilityQueryHandler implements QueryHandlerInterface
 {

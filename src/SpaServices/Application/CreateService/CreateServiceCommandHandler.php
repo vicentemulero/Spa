@@ -6,7 +6,7 @@ namespace App\SpaServices\Application\CreateService;
 
 
 use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use App\SpaServices\Domain\Model\ServiceId;
+use App\Shared\Domain\SpaValueObject\ServiceId;
 use App\SpaServices\Domain\Model\ServiceName;
 use App\SpaServices\Domain\Model\ServicePrice;
 

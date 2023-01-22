@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Shared\Infrastructure\Symfony\ApiController;
 use Symfony\Component\Validator\Constraints\Collection;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Type;
 use Symfony\Component\Validator\Constraints as Assert;
 
 final class GetServiceAvailabilityController extends ApiController
@@ -42,7 +40,7 @@ final class GetServiceAvailabilityController extends ApiController
     {
         $constraint = new Collection(
             [
-                'day' => [new NotBlank(), new Type(["string"]),
+                'day' => [new Assert\NotBlank(), new Assert\Type(["string"]),
                     new Assert\Regex(['pattern' => '#^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/([0-9]{4})$#'])]
             ]
         );

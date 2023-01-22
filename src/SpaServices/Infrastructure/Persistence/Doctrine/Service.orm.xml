@@ -23,6 +23,16 @@
             </cascade>
         </one-to-many>
 
+        <one-to-many
+            field="serviceReservations"
+            target-entity="App\Reservations\Domain\Model\Reservation"
+            mapped-by="serviceId"
+            index-by="id">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
     </entity>
 
 </doctrine-mapping>

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\SpaServices\Domain\Model;
 
+use App\Shared\Domain\SpaValueObject\ReservationId;
+use App\Shared\Domain\SpaValueObject\ServiceId;
 use DateTime;
 
 final class ServiceSchedule
@@ -12,12 +14,11 @@ final class ServiceSchedule
     private ?int $id;
     private Service $service;
     private ServiceId $serviceId;
-    private ?string $reservationId; //TODO Refactor to ReservationId
-    private ?DateTime $reservationDate;
+    private ?ReservationId $reservationId;
     private string $dayAvailable;
     private string $availableTo;
     private string $availableFrom;
-    private string $timeAvailable;
+    private string $availableTime;
     private bool $isAvailable;
     private DateTime $createdAt;
     private ?Datetime $updatedAt;
@@ -27,17 +28,16 @@ final class ServiceSchedule
         string         $dayAvailable,
         string         $availableFrom,
         string         $availableTo,
-        string         $timeAvailable
+        string         $availableTime
     )
     {
         $this->service = $service;
         $this->serviceId = $service->id();
+        $this->reservationId = null;
         $this->dayAvailable = $dayAvailable;
         $this->availableFrom = $availableFrom;
         $this->availableTo= $availableTo;
-        $this->timeAvailable = $timeAvailable;
-        $this->reservationId = null;
-        $this->reservationDate = null;
+        $this->availableTime = $availableTime;
         $this->isAvailable = true;
         $this->createdAt = new DateTime('now');
         $this->updatedAt = null;
@@ -59,8 +59,22 @@ final class ServiceSchedule
         return $this->dayAvailable;
     }
 
-    public function timeAvailable(): string
+    public function availableTime(): string
     {
-        return $this->timeAvailable;
+        return $this->availableTime;
+    }
+
+    public function disableAvailability(): void
+    {
+        $this->isAvailable = false;
+    }
+
+    public function setReservationId(ReservationId $reservationId): void
+    {
+        $this->reservationId = $reservationId;
+    }
+    public function setUpdatedAt(DateTime $updatedAt): void
+    {
+        $this->updatedAt= $updatedAt;
     }
 }

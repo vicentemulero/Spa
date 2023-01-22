@@ -3,6 +3,7 @@ doctrine:
         url: '%env(resolve:DATABASE_URL)%'
         types:
             service_id: App\SpaServices\Infrastructure\Persistence\Doctrine\ServiceIdType
+            reservation_id: App\Reservations\Infrastructure\Persistence\Doctrine\ReservationIdType
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
@@ -14,5 +15,11 @@ doctrine:
                 dir: '%kernel.project_dir%/src/SpaServices/Infrastructure/Persistence/Doctrine'
                 prefix: 'App\SpaServices\Domain\Model'
                 alias: Service
-    
+            
+            Reservation:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Reservations/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\Reservations\Domain\Model'
+                alias: Service
     

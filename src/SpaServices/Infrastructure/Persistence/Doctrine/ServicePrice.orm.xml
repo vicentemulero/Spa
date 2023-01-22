@@ -5,7 +5,7 @@
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
     <embeddable name="App\SpaServices\Domain\Model\ServicePrice">
-        <field name="value" type="float" column="price"/>
+        <field name="value" type="float" column="service_price"/>
     </embeddable>
 
 </doctrine-mapping>

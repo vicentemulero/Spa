@@ -6,7 +6,7 @@ namespace App\SpaServices\Application\CreateServiceSchedule;
 
 
 use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use App\SpaServices\Domain\Model\ServiceId;
+use App\Shared\Domain\SpaValueObject\ServiceId;
 use DateTime;
 
 final class CreateServiceScheduleCommandHandler implements CommandHandlerInterface

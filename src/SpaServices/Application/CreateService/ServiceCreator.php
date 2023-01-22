@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\SpaServices\Application\CreateService;
 
 use App\Shared\Domain\Bus\Event\EventBus;
+use App\Shared\Domain\SpaValueObject\ServiceId;
 use App\SpaServices\Domain\Exceptions\ServiceAlreadyExistsException;
 use App\SpaServices\Domain\Model\Service;
-use App\SpaServices\Domain\Model\ServiceId;
 use App\SpaServices\Domain\Model\ServiceName;
 use App\SpaServices\Domain\Model\ServicePrice;
 use App\SpaServices\Domain\Repository\ServiceRepositoryInterface;

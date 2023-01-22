@@ -4,8 +4,8 @@
                   xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <embeddable name="App\SpaServices\Domain\Model\ServiceName">
-        <field name="value" type="string" column="service_name"/>
+    <embeddable name="App\Reservations\Domain\Model\ClientName">
+        <field name="value" type="string" column="client_name"/>
     </embeddable>
 
 </doctrine-mapping>

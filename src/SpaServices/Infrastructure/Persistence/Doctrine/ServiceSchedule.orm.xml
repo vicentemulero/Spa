@@ -8,19 +8,21 @@
         </id>
 
         <field name="serviceId" column="service_id" type="service_id"/>
-        <field name="reservationId" column="reservation_id" nullable="true"/>
-        <field name="reservationDate" column="reservation_date" type="datetime" nullable="true"/>
         <field name="dayAvailable" column="day_available" />
         <field name="availableFrom" column="available_from"/>
         <field name="availableTo" column="available_to" />
-        <field name="timeAvailable" column="time_available"/>
+        <field name="availableTime" column="available_time"/>
         <field name="isAvailable" column="is_available" type="boolean"/>
         <field name="createdAt" column="created_at" type="datetime"/>
-        <field name="updatedAt" column="updated_at" type="datetime" nullable="true"/>
+        <field name="updatedAt" column="updated_at" type="datetime"/>
 
         <many-to-one field="service" target-entity="App\SpaServices\Domain\Model\Service" inversed-by="serviceSchedules">
             <join-column name="service_id" referenced-column-name="id"/>
         </many-to-one>
+
+        <one-to-one field="reservationId" target-entity="App\Reservations\Domain\Model\Reservation" inversed-by="scheduleId">
+            <join-column name="reservation_id" referenced-column-name="id" />
+        </one-to-one>
 
     </entity>
 </doctrine-mapping>

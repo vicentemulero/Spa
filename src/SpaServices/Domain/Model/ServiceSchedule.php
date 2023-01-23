@@ -60,6 +60,16 @@ class ServiceSchedule
         return $this->dayAvailable;
     }
 
+    public function availableFrom(): string
+    {
+        return $this->availableFrom;
+    }
+
+    public function availableTo(): string
+    {
+        return $this->availableTo;
+    }
+
     public function availableTime(): string
     {
         return $this->availableTime;

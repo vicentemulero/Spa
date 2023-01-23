@@ -93,4 +93,14 @@ final class Service extends AggregateRoot
     {
         return $this->createdAt;
     }
+
+    public function serviceSchedules(): Collection
+    {
+        return $this->serviceSchedules;
+    }
+
+    public function serviceReservations(): Collection
+    {
+        return $this->serviceReservations;
+    }
 }

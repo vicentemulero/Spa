@@ -10,6 +10,7 @@ use App\SpaServices\Domain\Exceptions\ServiceNotExistsException;
 use App\SpaServices\Domain\Exceptions\ServiceScheduleAlreadyDefined;
 use App\SpaServices\Domain\Repository\ServiceRepositoryInterface;
 use DateTime;
+use function Lambdish\Phunctional\first;
 
 final class ServiceScheduleCreator
 {
@@ -34,9 +35,10 @@ final class ServiceScheduleCreator
             throw new ServiceNotExistsException($id->value());
         }
 
-        empty($service->serviceSchedulesAvailableFilteredByDayAndTime($dayAvailable->format('d/m/Y'))) ?
-            $service->addServiceSchedules($dayAvailable, $availableFrom, $availableTo) :
+        $service->serviceSchedulesAvailableFilteredByDayAndTime($dayAvailable->format('d/m/Y'))->isEmpty() ?
+            $service->addServiceSchedules($dayAvailable, $availableFrom, $availableTo):
             throw new ServiceScheduleAlreadyDefined($dayAvailable->format('d/m/Y'));
+
 
         $this->repository->store($service);
         $this->bus->publish(...$service->pullDomainEvents());

@@ -29,7 +29,7 @@ final class ServiceAvailabilityFinder
 
     private function transformServiceScheduleAvailable(Service $service, string $day): array
     {
-        $availabilities = $service->serviceSchedulesAvailable($day);
+        $availabilities = $service->serviceSchedulesAvailableFilteredByDayAndTime($day);
 
         if (empty($availabilities)) {
             return [];

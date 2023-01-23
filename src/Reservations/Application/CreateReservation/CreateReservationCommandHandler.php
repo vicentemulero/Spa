@@ -8,7 +8,6 @@ namespace App\Reservations\Application\CreateReservation;
 use App\Reservations\Domain\Model\ClientEmail;
 use App\Reservations\Domain\Model\ClientName;
 use App\Shared\Domain\Bus\Command\CommandHandlerInterface;
-use App\Shared\Domain\SpaValueObject\ReservationId;
 use App\Shared\Domain\SpaValueObject\ServiceId;
 use DateTime;
 
@@ -21,7 +20,6 @@ final class CreateReservationCommandHandler implements CommandHandlerInterface
 
     public function __invoke(CreateReservationCommand $command)
     {
-        $id = new ReservationId($command->id());
         $serviceId = new ServiceId($command->serviceId());
         $clientName = new ClientName($command->clientName());
         $clientEmail = new ClientEmail($command->clientEmail());
@@ -29,6 +27,6 @@ final class CreateReservationCommandHandler implements CommandHandlerInterface
         $reservedTime = $command->reservedTime();
         $createdAt = new DateTime('now');
 
-        $this->creator->__invoke($id, $serviceId, $clientName, $clientEmail, $reservedDay, $reservedTime, $createdAt);
+        $this->creator->__invoke($serviceId, $clientName, $clientEmail, $reservedDay, $reservedTime, $createdAt);
     }
 }

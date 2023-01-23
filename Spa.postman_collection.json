@@ -1,0 +1,155 @@
+{
+	"info": {
+		"_postman_id": "87e4c554-7cc8-457a-8dc8-a5742fee21e9",
+		"name": "Spa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Spa Service",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Masaje piernas\",\r\n    \"price\": 25.00\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/service/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"service",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Schedule Service",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"day_available\": \"25/01/2023\",\r\n    \"available_from\": \"09:00\",\r\n    \"available_to\": \"13:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/service/{serviceId}/schedule/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"service",
+						"{serviceId}",
+						"schedule",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Service Availability",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"day\": \"25/01/2023\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/service/{serviceId}/schedule/availability",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"service",
+						"{serviceId}",
+						"schedule",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Services",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/service/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"service",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Spa Reservation",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"client_name\": \"Prueba\",\r\n    \"client_email\": \"prueba@gmail.com\",\r\n    \"reserved_day\": \"25/01/2023\",\r\n    \"reserved_time\": \"10:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/reservation/create/{serviceId}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"reservation",
+						"create",
+						"{serviceId}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

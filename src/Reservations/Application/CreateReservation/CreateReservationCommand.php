@@ -9,7 +9,6 @@ use App\Shared\Domain\Bus\Command\CommandInterface;
 final class CreateReservationCommand implements CommandInterface
 {
     public function __construct(
-        private readonly string $id,
         private readonly string $serviceId,
         private readonly string $clientName,
         private readonly string $clientEmail,
@@ -19,11 +18,6 @@ final class CreateReservationCommand implements CommandInterface
     {
     }
 
-
-    public function id(): string
-    {
-        return $this->id;
-    }
 
     public function serviceId(): string
     {

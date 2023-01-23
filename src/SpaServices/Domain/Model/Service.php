@@ -72,10 +72,10 @@ final class Service extends AggregateRoot
         return $this->id;
     }
 
-    public function serviceSchedulesAvailableFilteredByDayAndTime(string $day, $time= null): ?Collection
+    public function serviceSchedulesAvailableFilteredByDayAndTime(string $day, $time= null): Collection
     {
         return $this->serviceSchedules->filter(function ($schedule) use ($day, $time) {
-            return $schedule->dayAvailable() == $day && (is_null($time) || $schedule->time() === $time) && $schedule->isAvailable() == true;
+            return $schedule->dayAvailable() == $day && (is_null($time) || $schedule->availableTime() === $time) && $schedule->isAvailable() == true;
         });
     }
 

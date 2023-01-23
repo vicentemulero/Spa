@@ -6,48 +6,115 @@ namespace App\Reservations\Domain\Model;
 
 use App\Reservations\Domain\Events\ReservationCreatedEvent;
 use App\Shared\Domain\Aggregate\AggregateRoot;
-use App\Shared\Domain\SpaValueObject\ReservationId;
 use App\Shared\Domain\SpaValueObject\ServiceId;
+use App\SpaServices\Domain\Model\Service;
 use App\SpaServices\Domain\Model\ServiceName;
 use App\SpaServices\Domain\Model\ServicePrice;
+use App\SpaServices\Domain\Model\ServiceSchedule;
 use DateTime;
 
-final class Reservation extends AggregateRoot
+class Reservation extends AggregateRoot
 {
+    private ?int $id;
+    private Service $service;
+    private ServiceSchedule $serviceSchedule;
+    private ServiceId $serviceId;
+    private int $scheduleId;
+    private ClientName $clientName;
+    private ClientEmail $clientEmail;
+    private string $reservedDay;
+    private string $reservedTime;
+    private ServiceName $serviceName;
+    private ServicePrice $servicePrice;
+    private DateTime $createdAt;
 
     public function __construct(
-        private readonly ReservationId $id,
-        private readonly ServiceId     $serviceId,
-        private readonly int           $scheduleId,
-        private readonly ClientName    $clientName,
-        private readonly ClientEmail   $clientEmail,
-        private readonly string        $reservedDay,
-        private readonly string        $reservedTime,
-        private readonly ServiceName   $serviceName,
-        private readonly ServicePrice  $servicePrice,
-        private readonly DateTime      $createdAt
+        Service         $service,
+        ServiceSchedule $serviceSchedule,
+        ClientName      $clientName,
+        ClientEmail     $clientEmail,
+        string          $reservedDay,
+        string          $reservedTime
     )
     {
+        $this->service = $service;
+        $this->serviceSchedule = $serviceSchedule;
+        $this->serviceId = $service->id();
+        $this->scheduleId = $serviceSchedule->id();
+        $this->clientName = $clientName;
+        $this->clientEmail = $clientEmail;
+        $this->reservedDay = $reservedDay;
+        $this->reservedTime = $reservedTime;
+        $this->serviceName = $service->name();
+        $this->servicePrice = $service->price();
+        $this->createdAt = new DateTime();
+
     }
 
-    public static function create(ReservationId $id, ServiceId $serviceId, int $scheduleId, ClientName $clientName, ClientEmail $clientEmail, string $reservedDay, string $reservedTime,
-                                  ServiceName   $serviceName, ServicePrice $servicePrice, DateTime $createdAt): self
+    public function id(): int
     {
-        $reservation = new self($id, $serviceId, $scheduleId, $clientName, $clientEmail, $reservedDay, $reservedTime, $serviceName, $servicePrice, $createdAt);
-        $reservation->record(new ReservationCreatedEvent(
-            $id->value(),
-            $serviceId->value(),
-            $scheduleId,
-            $clientName->value(),
-            $clientEmail->value(),
-            $reservedDay,
-            $reservedTime,
-            $serviceName->value(),
-            $servicePrice->value(),
-            $createdAt->format('Y-m-d H:i:s')
+        return $this->id;
+    }
+
+    public function forceDomainEvent(): void
+    {
+        $this->record(new ReservationCreatedEvent(
+            $this->id(),
+            $this->serviceId()->value(),
+            $this->scheduleId(),
+            $this->clientName()->value(),
+            $this->clientEmail()->value(),
+            $this->reservedDay(),
+            $this->reservedTime(),
+            $this->serviceName()->value(),
+            $this->servicePrice()->value(),
+            $this->createdAt()->format('Y-m-d H:i:s')
         ));
 
-        return $reservation;
     }
 
+    private function serviceId(): ServiceId
+    {
+        return $this->serviceId;
+    }
+
+    private function scheduleId(): int
+    {
+        return $this->scheduleId;
+    }
+
+    private function clientName(): ClientName
+    {
+        return $this->clientName;
+    }
+
+    private function clientEmail(): ClientEmail
+    {
+        return $this->clientEmail;
+    }
+
+    private function reservedDay(): string
+    {
+        return $this->reservedDay;
+    }
+
+    private function reservedTime(): string
+    {
+        return $this->reservedTime;
+    }
+
+    private function serviceName(): ServiceName
+    {
+        return $this->serviceName;
+    }
+
+    private function servicePrice(): ServicePrice
+    {
+        return $this->servicePrice;
+    }
+
+    private function createdAt(): DateTime
+    {
+        return $this->createdAt;
+    }
 }

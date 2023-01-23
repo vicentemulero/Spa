@@ -10,7 +10,6 @@ use App\Reservations\Domain\Model\ClientName;
 use App\Reservations\Domain\Model\Reservation;
 use App\Reservations\Domain\Repository\ReservationRepositoryInterface;
 use App\Shared\Domain\Bus\Event\EventBus;
-use App\Shared\Domain\SpaValueObject\ReservationId;
 use App\Shared\Domain\SpaValueObject\ServiceId;
 use App\SpaServices\Domain\Exceptions\ServiceNotExistsException;
 use App\SpaServices\Domain\Model\ServiceSchedule;
@@ -29,13 +28,12 @@ final class ReservationCreator
     }
 
     public function __invoke(
-        ReservationId $id,
-        ServiceId     $serviceId,
-        ClientName    $clientName,
-        ClientEmail   $clientEmail,
-        string        $reservedDay,
-        string        $reservedTime,
-        DateTime      $createdAt
+        ServiceId   $serviceId,
+        ClientName  $clientName,
+        ClientEmail $clientEmail,
+        string      $reservedDay,
+        string      $reservedTime,
+        DateTime    $createdAt
     ): void
     {
         $service = $this->serviceRepository->findById($serviceId);
@@ -46,31 +44,29 @@ final class ReservationCreator
 
         $availableHoursFound = $service->serviceSchedulesAvailableFilteredByDayAndTime($reservedDay, $reservedTime);
 
-        if (empty($availableHoursFound)) {
+        if ($availableHoursFound->isEmpty()) {
             throw new ReservationNotAllowedException($serviceId->value(), $reservedTime);
         }
 
         /** @var ServiceSchedule $availableServiceSchedule */
-        $availableServiceSchedule= $availableHoursFound->first();
+        $availableServiceSchedule = $availableHoursFound->first();
 
-        $reservation = Reservation::create(
-            $id,
-            $serviceId,
-            $availableServiceSchedule->id(),
+        $reservation = new Reservation(
+            $service,
+            $availableServiceSchedule,
             $clientName,
             $clientEmail,
             $availableServiceSchedule->dayAvailable(),
-            $availableServiceSchedule->availableTime(),
-            $service->name(),
-            $service->price(),
-            $createdAt);
+            $availableServiceSchedule->availableTime());
+
+        $this->reservationRepository->store($reservation);
+        $reservation->forceDomainEvent();
 
         $availableServiceSchedule->disableAvailability();
-        $availableServiceSchedule->setReservationId($id);
+        $availableServiceSchedule->setReservation($reservation);
         $availableServiceSchedule->setUpdatedAt(new DateTime('now'));
         $service->addServiceReservation($reservation);
 
-        $this->reservationRepository->store($reservation);
         $this->serviceRepository->store($service);
         $this->bus->publish(...$service->pullDomainEvents());
     }

@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace App\SpaServices\Domain\Model;
 
-use App\Shared\Domain\SpaValueObject\ReservationId;
+use App\Reservations\Domain\Model\Reservation;
 use App\Shared\Domain\SpaValueObject\ServiceId;
 use DateTime;
 
-final class ServiceSchedule
+class ServiceSchedule
 {
 
     private ?int $id;
     private Service $service;
     private ServiceId $serviceId;
-    private ?ReservationId $reservationId;
+    private Reservation $reservation;
+    private ?int $reservationId;
     private string $dayAvailable;
     private string $availableTo;
     private string $availableFrom;
@@ -24,11 +25,11 @@ final class ServiceSchedule
     private ?Datetime $updatedAt;
 
     public function __construct(
-        Service        $service,
-        string         $dayAvailable,
-        string         $availableFrom,
-        string         $availableTo,
-        string         $availableTime
+        Service $service,
+        string  $dayAvailable,
+        string  $availableFrom,
+        string  $availableTo,
+        string  $availableTime
     )
     {
         $this->service = $service;
@@ -36,7 +37,7 @@ final class ServiceSchedule
         $this->reservationId = null;
         $this->dayAvailable = $dayAvailable;
         $this->availableFrom = $availableFrom;
-        $this->availableTo= $availableTo;
+        $this->availableTo = $availableTo;
         $this->availableTime = $availableTime;
         $this->isAvailable = true;
         $this->createdAt = new DateTime('now');
@@ -69,12 +70,14 @@ final class ServiceSchedule
         $this->isAvailable = false;
     }
 
-    public function setReservationId(ReservationId $reservationId): void
+    public function setReservation(Reservation $reservation): void
     {
-        $this->reservationId = $reservationId;
+        $this->reservation = $reservation;
+        $this->reservationId = $reservation->id();
     }
+
     public function setUpdatedAt(DateTime $updatedAt): void
     {
-        $this->updatedAt= $updatedAt;
+        $this->updatedAt = $updatedAt;
     }
 }

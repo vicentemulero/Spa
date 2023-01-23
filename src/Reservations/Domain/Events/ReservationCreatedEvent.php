@@ -9,7 +9,7 @@ use App\Shared\Domain\Bus\Event\DomainEvent;
 final class ReservationCreatedEvent extends DomainEvent
 {
     public function __construct(
-        string                  $id,
+        int                  $id,
         private readonly string $serviceId,
         private readonly int    $scheduleId,
         private readonly string $clientName,
@@ -23,7 +23,7 @@ final class ReservationCreatedEvent extends DomainEvent
         string                  $occurredOn = null
     )
     {
-        parent::__construct($id, $eventId, $occurredOn);
+        parent::__construct((string)$id, $eventId, $occurredOn);
     }
 
     public static function eventName(): string

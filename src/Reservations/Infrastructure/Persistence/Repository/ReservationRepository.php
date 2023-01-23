@@ -6,7 +6,6 @@ namespace App\Reservations\Infrastructure\Persistence\Repository;
 
 use App\Reservations\Domain\Model\Reservation;
 use App\Reservations\Domain\Repository\ReservationRepositoryInterface;
-use App\Shared\Domain\SpaValueObject\ReservationId;
 use App\Shared\Infrastructure\Persistence\Doctrine\DoctrineRepository;
 
 class ReservationRepository extends DoctrineRepository implements ReservationRepositoryInterface

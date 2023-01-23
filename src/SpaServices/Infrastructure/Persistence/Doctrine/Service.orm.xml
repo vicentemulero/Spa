@@ -26,7 +26,7 @@
         <one-to-many
             field="serviceReservations"
             target-entity="App\Reservations\Domain\Model\Reservation"
-            mapped-by="serviceId"
+            mapped-by="service"
             index-by="id">
             <cascade>
                 <cascade-all/>

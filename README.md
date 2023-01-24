@@ -1,8 +1,26 @@
-# skeleton-php-symfony
+# Spa API
+
+This api facilitates the creation of services and reservations for a Spa.
+
+
+### Workflow
+
+The workflow of this API is as follows:
+
+1. Admins will **create the spa service** by specifying a `name` and `price`.
+   <br/><br/>
+2. In order to make a reservation, the **created service** needs an associated **schedule**, we will create it by specifying 
+   a `day`(format: d/m/y) `time available from`(format: H:i --> 09:00) and `time available to`(format: H:i --> 13:00).
+   <br/><br/>
+3. Customers can make **reservations** for the hours available to the service, for this, they have to specify the `day`(format: d/m/y) and `time`(format: H:i)
+   in which the service is available, their `name`,`email` and the ID of the service to reserve.
+
+- Customers can check the availability of a **service** by specifying a `day`(format: d/m/y).
+
 
 ## PHP, Symfony & PostgreSQL
 
-<br/><br/>
+<br/>
 
 This repository is a PHP skeleton with Symfony & PostgreSQL designed for quickly getting started developing an API.
 Check the [Getting Started](#getting-started) for full details.
@@ -51,9 +69,12 @@ As you could see on the [Makefile](Makefile) script, you could just avoid those 
 **build** is dependant of it.
 
 Go to `http://localhost:8080/api/health` or `http://localhost:8080` to see that everything is up & running! <br/><br/>
-If you get an error for the var folder, just create the var/cache/dev directories in the root of the project and give it read and write permissions.
+If you get an error for the var folder, just create the **var/cache/dev** directories in the root of the project and give it read and write permissions.
 <br/><br/>
+
 Now you can run the test with `make test/all` or `make test` to run with coverage information!
+
+Other possible errors are class recognition, to fix it run `make bash`, `composer dump-autoload` and `php bin/console cache:clear` in that order.
 
 
 
@@ -116,3 +137,31 @@ layer. In this folder you will find
 Any of your domain Entities,ValueObjects, or Services, that models your business logic. These classes should be completely isolated
 of any external dependency or framework, but interact with them. This layer should follow the Dependency Inversion
 principle.
+
+## Decisions made when creating the application and tools used
+
+- `Hexagonal Arquitecture`: This pattern has been chosen because it uses a clear and organized structure for the development of applications,
+  as well as its ease of maintainability, scalability and testing
+
+
+- `CQRS`: This pattern allows for separating read and write operations, which improves scalability, reliability,
+  simplifies business logic and improves runtime performance.
+
+
+- `DDD`:  It has been decided to develop the application with DDD because it helps to improve the understanding and communication of business,
+  providing a flexible structure and facilitating code reuse.
+
+
+- `Shared directory`: This custom directory is based on the repository https://github.com/CodelyTV/php-ddd-example,
+  it contains the common code that the application may have and defines the classes necessary to carry out CQRS, DDD etc.
+
+
+- `Domain Events`: Domain events have been decided to be implemented in case the application requires it in the future.
+
+
+- `Symfony Profiler`: This tool has been used to obtain information related to the application such as queries made to the database,
+  event history and in general helps for debugging. We can access the Profiler through the following link when the application is running: http://localhost:8080/_profiler
+
+
+- `Mockery and Faker Libraries`: These libraries have been used to help in the testing environment. With Mockery, we can create fake test objects that are used as dependencies in unit tests,
+  thereby isolating classes and testing desired functionality. Faker helps us generate random data for our tests, which helps test features more thoroughly.

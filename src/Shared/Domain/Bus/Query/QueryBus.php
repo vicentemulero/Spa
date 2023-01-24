@@ -4,5 +4,5 @@ namespace App\Shared\Domain\Bus\Query;
 
 interface QueryBus
 {
-    public function dispatch(QueryInterface $query): QueryResponse;
+    public function ask(QueryInterface $query): QueryResponse|null;
 }

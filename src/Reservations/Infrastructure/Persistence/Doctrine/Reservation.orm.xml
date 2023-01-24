@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="App\Reservations\Domain\Model\Reservation" table="reservation">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+
+        <embedded name="clientName" class="App\Reservations\Domain\Model\ClientName"  use-column-prefix="false" />
+        <embedded name="clientEmail" class="App\Reservations\Domain\Model\ClientEmail" use-column-prefix="false" />
+        <field name="reservedDay" column="reserved_day" />
+        <field name="reservedTime" column="reserved_time"/>
+        <embedded name="serviceName" class="App\SpaServices\Domain\Model\ServiceName"  use-column-prefix="false" />
+        <embedded name="servicePrice" class="App\SpaServices\Domain\Model\ServicePrice" use-column-prefix="false" />
+        <field name="createdAt" column="created_at" type="datetime"/>
+
+        <many-to-one field="service" target-entity="App\SpaServices\Domain\Model\Service" inversed-by="serviceReservations">
+            <join-column name="service_id" referenced-column-name="id"/>
+        </many-to-one>
+
+        <one-to-one field="serviceSchedule" target-entity="App\SpaServices\Domain\Model\ServiceSchedule" mapped-by="reservation">
+            <join-column name="schedule_id" referenced-column-name="id" />
+        </one-to-one>
+
+
+
+    </entity>
+</doctrine-mapping>

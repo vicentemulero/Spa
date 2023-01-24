@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\SpaServices\Domain\Model\Service" table="service">
+        <id name="id" type="service_id" column="id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <embedded name="name" class="App\SpaServices\Domain\Model\ServiceName"  use-column-prefix="false" />
+        <embedded name="price" class="App\SpaServices\Domain\Model\ServicePrice" use-column-prefix="false" />
+        <field name="createdAt" type="datetime" column="created_at"/>
+
+        <one-to-many
+            field="serviceSchedules"
+            target-entity="App\SpaServices\Domain\Model\ServiceSchedule"
+            mapped-by="service"
+            index-by="id">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+        <one-to-many
+            field="serviceReservations"
+            target-entity="App\Reservations\Domain\Model\Reservation"
+            mapped-by="service"
+            index-by="id">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
+
+    </entity>
+
+</doctrine-mapping>

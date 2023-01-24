@@ -1,38 +1,38 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Shared\Infrastructure\Symfony;
 
-use App\Shared\Domain\Bus\Command\CommandBus;
+use function Lambdish\Phunctional\each;
 use App\Shared\Domain\Bus\Command\CommandInterface;
-use App\Shared\Domain\Bus\Query\QueryBus;
 use App\Shared\Domain\Bus\Query\QueryInterface;
 use App\Shared\Domain\Bus\Query\QueryResponse;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Shared\Domain\Bus\Query\QueryBus;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Constraints\Collection;
+use App\Shared\Domain\Bus\Command\CommandBus;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 abstract class ApiController extends AbstractController
 {
-    private CommandBus $commandBus;
-    private QueryBus   $queryBus;
 
     public function __construct(
-        CommandBus $commandBus,
-        QueryBus $queryBus,
+        private readonly QueryBus $queryBus,
+        private readonly CommandBus $commandBus,
         ApiExceptionsHttpStatusCodeMapping $exceptionHandler
+
     ) {
-        $this->commandBus = $commandBus;
-        $this->queryBus   = $queryBus;
-
-        foreach ($this->exceptions() as $exceptionClass => $httpCode) {
-            $exceptionHandler->register($exceptionClass, $httpCode);
-        }
+        each(
+            fn (int $httpCode, string $exceptionClass) => $exceptionHandler->register($exceptionClass, $httpCode),
+            $this->exceptions()
+        );
     }
-
-    abstract protected function exceptions(): array;
 
     protected function ask(QueryInterface $query): ?QueryResponse
     {
-        return $this->queryBus->dispatch($query);
+        return $this->queryBus->ask($query);
     }
 
     protected function dispatch(CommandInterface $command): void
@@ -49,4 +49,28 @@ abstract class ApiController extends AbstractController
         );
     }
 
+    public function errorResponse(int $httpCode, int $errorCode = 0, mixed $errorMessage = null): JsonResponse
+    {
+        return ErrorJsonResponse::create(
+            $httpCode,
+            [
+                'errorCode' => $errorCode,
+                'errorMessage' => $errorMessage
+            ],
+            ['Access-Control-Allow-Origin' => '*']
+        );
+    }
+
+    public function requestValidation(array $input, Collection $constraint): ?array
+    {
+        $validationErrors = Validation::createValidator()->validate($input, $constraint);
+        if (!$validationErrors->count() > 0) return null;
+
+        $errors = [];
+        foreach ($validationErrors as $violation) {
+            $errors[str_replace(['[', ']'], ['', ''], $violation->getPropertyPath())] = $violation->getMessage();
+        }
+        return $errors;
+    }
+    abstract protected function exceptions(): array;
 }

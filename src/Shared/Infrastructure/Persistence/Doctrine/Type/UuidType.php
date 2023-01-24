@@ -5,27 +5,28 @@ namespace App\Shared\Infrastructure\Persistence\Doctrine\Type;
 
 use App\Shared\Domain\Utils;
 use App\Shared\Domain\ValueObject\Uuid;
+use App\Shared\Infrastructure\Doctrine\Dbal\DoctrineCustomType;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\StringType;
+use function Lambdish\Phunctional\last;
 
-class UuidType extends StringType
+abstract class UuidType extends StringType implements DoctrineCustomType
 {
-    protected function typeClassName(): string
+
+    abstract protected function typeClassName(): string;
+
+    public static function customTypeName(): string
     {
-        return Uuid::class;
+        return Utils::toSnakeCase(str_replace('Type', '', (string) last(explode('\\', static::class))));
     }
 
-    public function getName()
+    public function getName(): string
     {
         return self::customTypeName();
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform)
+    public function convertToPHPValue($value, AbstractPlatform $platform): mixed
     {
-        if (null === $value) {
-            return null;
-        }
-
         $className = $this->typeClassName();
 
         return new $className($value);
@@ -33,16 +34,11 @@ class UuidType extends StringType
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
+
         if ($value instanceof Uuid) {
             return $value->value();
         }
 
         return $value;
-    }
-
-    public static function customTypeName(): string
-    {
-        $explodedClassName = explode('\\', static::class);
-        return Utils::toSnakeCase(str_replace('Type', '', end($explodedClassName)));
     }
 }

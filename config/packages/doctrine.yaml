@@ -1,18 +1,26 @@
 doctrine:
     dbal:
-        types:
-            #uuid: App\Shared\Infrastructure\Persistence\Doctrine\Type\UuidType
         url: '%env(resolve:DATABASE_URL)%'
+        driver: pdo_pgsql
+        types:
+            service_id: App\SpaServices\Infrastructure\Persistence\Doctrine\ServiceIdType
+            
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
         auto_mapping: true
-        #mappings:
-        #    App:
-        #        is_bundle: false
-        #        type: xml
-        #        dir: '%kernel.project_dir%/src/Entity/Infrastructure/Persistence/Doctrine'
-        #        prefix: 'App\Entity\Domain'
-        #        alias: App
-    
+        mappings:
+            Service:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/SpaServices/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\SpaServices\Domain\Model'
+                alias: Service
+            
+            Reservation:
+                is_bundle: false
+                type: xml
+                dir: '%kernel.project_dir%/src/Reservations/Infrastructure/Persistence/Doctrine'
+                prefix: 'App\Reservations\Domain\Model'
+                alias: Service
     

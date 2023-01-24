@@ -1,0 +1,4 @@
+create_reservation:
+    path: /create/{serviceId}
+    controller: App\Reservations\Infrastructure\Api\CreateReservationController
+    methods: [Post]

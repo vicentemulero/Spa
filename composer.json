@@ -15,11 +15,13 @@
         "ramsey/uuid": "^4.7",
         "symfony/console": "6.0.*",
         "symfony/dotenv": "6.0.*",
+        "symfony/expression-language": "^6.2",
         "symfony/messenger": "6.0.*",
         "symfony/monolog-bundle": "^3.7",
         "symfony/runtime": "^6.1",
         "symfony/security-bundle": "^6.1",
         "symfony/serializer": "^6.1",
+        "symfony/validator": "^6.2",
         "symfony/yaml": "6.0.*"
     },
     "require-dev": {

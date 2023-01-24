@@ -8,12 +8,10 @@ use Stringable;
 
 class Uuid implements Stringable
 {
-    protected string $value;
 
-    public function __construct(string $value)
+    public function __construct(protected string $value)
     {
         $this->ensureIsValidUuid($value);
-        $this->value = $value;
     }
 
     /**
@@ -44,10 +42,5 @@ class Uuid implements Stringable
         if (!RamseyUuid::isValid($id)) {
             throw new InvalidArgumentException(sprintf('<%s> does not allow the value <%s>.', static::class, $id));
         }
-    }
-
-    public static function createFromString(string $id): self
-    {
-        return new self($id);
     }
 }

@@ -1,0 +1,19 @@
+get_services:
+    path: /all
+    controller: App\SpaServices\Infrastructure\Api\GetServicesController
+    methods: [GET]
+
+create_service:
+    path: /create
+    controller: App\SpaServices\Infrastructure\Api\CreateServiceController
+    methods: [Post]
+
+create_schedule_service:
+    path: /{id}/schedule/create
+    controller: App\SpaServices\Infrastructure\Api\CreateScheduleServiceController
+    methods: [Post]
+
+get_schedule_availability:
+    path: /{id}/schedule/availability
+    controller: App\SpaServices\Infrastructure\Api\GetServiceAvailabilityController
+    methods: [POST]

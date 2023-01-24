@@ -1,3 +1,18 @@
+Home:
+    path: /
+    controller: App\Health\Infrastructure\Api\HealthController
+    methods: [GET]
+
+SpaService:
+    prefix: /api/service
+    resource: ../src/SpaServices/Infrastructure/Api/routes.yaml
+    trailing_slash_on_root: false
+    
+SpaReservation:
+    prefix: /api/reservation
+    resource: ../src/Reservations/Infrastructure/Api/routes.yaml
+    trailing_slash_on_root: false    
+
 Health:
     prefix: /api/health
     resource: ../src/Health/Infrastructure/Api/routes.yaml
